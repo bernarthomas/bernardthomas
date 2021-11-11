@@ -1,0 +1,142 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    admin.culture:
+        class: App\Admin\CultureAdmin
+        arguments: [~, App\Entity\Culture, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Culture }
+        public: true
+
+    admin.recolte:
+        class: App\Admin\RecolteAdmin
+        arguments: [~, App\Entity\Recolte, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Recolte }
+        public: true
+
+    App\Routing\AccueilLoader:
+        tags:
+            - {name: routing.loader}
+
+    admin.billet:
+        class: App\Admin\BilletAdmin
+        arguments: [~, App\Entity\Billet, App\Controller\BilletAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Billet }
+        public: true
+
+    App\EventListener\EntiteSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber , connection: default }
+
+    admin.activite:
+        class: App\Admin\ActiviteAdmin
+        arguments: [~, App\Entity\Activite, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Activite }
+        public: true
+
+    admin.projet:
+        class: App\Admin\ProjetAdmin
+        arguments: [~, App\Entity\Projet, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Projet }
+        public: true
+
+    admin.tachetype:
+        class: App\Admin\TacheTypeAdmin
+        arguments: [~, App\Entity\TacheType, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: TacheType }
+        public: true
+
+    admin.tache:
+        class: App\Admin\TacheAdmin
+        arguments: [~, App\Entity\Tache, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Tache }
+        public: true
+        calls:
+            - [ setTemplate, [ 'layout', 'tache/standard_layout.html.twig' ] ]
+
+    admin.export_tache:
+        class: App\Admin\ExportTacheAdmin
+        arguments: [~, App\Entity\ExportTache, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: ExportTache }
+        public: true
+
+    admin.achat_nourriture:
+        class: App\Admin\AchatNourritureAdmin
+        arguments: [~, App\Entity\AchatNourriture, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: AchatNourriture }
+        public: true
+
+    admin.fournisseur:
+        class: App\Admin\FournisseurAdmin
+        arguments: [~, App\Entity\Fournisseur, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Fournisseur }
+        public: true
+
+    admin.zone:
+        class: App\Admin\ZoneAdmin
+        arguments: [~, App\Entity\Zone, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Zone }
+        public: true
+
+    admin.legende:
+        class: App\Admin\LegendeAdmin
+        arguments: [~, App\Entity\Legende, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Legende }
+        public: true
+
+    admin.variete:
+        class: App\Admin\VarieteAdmin
+        arguments: [~, App\Entity\Variete, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Variete }
+        public: true
+
+    admin.suivi_culture:
+        class: App\Admin\SuiviCultureAdmin
+        arguments: [~, App\Entity\SuiviCulture, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: SuiviCulture }
+        public: true
+
+    admin.element:
+        class: App\Admin\ElementAdmin
+        arguments: [~, App\Entity\Element, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Element }
+        public: true

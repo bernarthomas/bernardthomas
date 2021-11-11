@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un semis, une plantation{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/cosmo/bootstrap.min.css" integrity="sha384-5QFXyVb+lrCzdN228VS3HmzpiE7ZVwLQtkt+0d9W43LQMzz4HBnnqvVxKg6O+04d" crossorigin="anonymous">
+{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                    <h1>Ajouter un semis, une plantation</h1>
+                    {{ form_start(form) }}
+                    {{ form_rest(form) }}
+                    <input class="btn btn btn-outline-dark" type="submit" value="Ajouter">
+                    {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>Liste</h1>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Activité</th>
+                                    <th scope="col">Lieu</th>
+                                    <th scope="col">Prévu</th>
+                                    <th scope="col">Réalisé</th>
+                                    <th scope="col">Première récolte le</th>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comparaison récoltes mensuelles 2018 à 2020{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        table {text-align: right;}
+        td {min-width: 5rem;}
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% block titre %}<h1>Comparaison récoltes mensuelles 2018 à 2020</h1>{% endblock %}
+    {% block corps %}
+        <form method="get">
+            <select name="culture">
+                <option disabled {% if culture is null %}selected {% endif %}></option>
+                {% for option in filtre %}
+                <option value="{{ option.id }}" {% if culture == option.id %}selected {% endif %}>{{ option.libelle }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="filtrer">
+        </form>
+        {% if donnees is empty %}
+            <p>Aucun résultat</p>
+        {% else %}
+{#            {{ dump(donnees) }}#}
+            <table>
+                <tr>
+                    <th>cultures</th>
+                    <th>années</th>
+                    <th>total</th>
+                    <th>01</th>
+                    <th>02</th>
+                    <th>03</th>
+                    <th>04</th>
+                    <th>05</th>
+                    <th>06</th>
+                    <th>07</th>
+                    <th>08</th>
+                    <th>09</th>
+                    <th>10</th>
+                    <th>11</th>
+                    <th>12</th>
+                </tr>
+                {%  for nom_culture, culture in donnees %}
+                    {%  for nom_mois, mois in culture %}
+                        <tr>
+                            <td>{{ nom_culture }}</td>
+                            <td>{{ nom_mois }}</td>
+                            {%  for poids in mois %}
+                                <td>{{ poids }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

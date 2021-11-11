@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Récoltes 2021 (Kg){% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        h1 {width: 25rem;}
+        table {text-align: right;}
+        td {min-width: 5rem;}
+        .d-flex {display: flex;}
+        #recolte_filtre {display: flex;}
+        .form-group {width: 10rem;}
+        .m-top-1-5 {margin-top: 1.5rem;}
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% block titre %}
+        <div class="d-flex">
+        <h1>Récoltes 2021 (Kg)</h1>
+        {{ form(formulaire) }}
+        </div>
+    {% endblock %}
+    {% block corps %}
+        {% if donnees is empty %}
+        <p>Aucun résultat</p>
+        {% else %}
+        <table>
+        {%  for ligne, donnee in donnees %}
+            <tr>
+            {%  for colonne, valeur in donnee %}
+                {%-  if ligne == 0 or ligne == 1 or colonne == 'total' or colonne == 'culture' -%}<th>{%-  else  -%}<td>{%- endif -%}{{- valeur -}}{%-  if ligne == 0 or ligne == 1 or colonne == 'total' or colonne == 'culture' -%}</th>{%-  else  -%}</td>{%- endif -%}
+            {% endfor %}
+            </tr>
+        {% endfor %}
+        </table>
+        {% endif %}
+    {% endblock %}
+{% endblock %}

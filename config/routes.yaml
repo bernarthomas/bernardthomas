@@ -1,0 +1,8 @@
+action_ajouter:
+    path: action/ajouter
+    controller: App\Controller\Action\AjouterController
+app_extra:
+  resource: .
+  type: billet
+
+
